@@ -5,7 +5,6 @@ Licensed under the Apache License 2.0, seen https://github.com/coursera/react-im
 Minor syntax modifications have been made
 */
 
-var Uri = require("jsuri");
 var Base64 = require("js-base64").Base64;
 const PACKAGE_VERSION = require("../package.json").version;
 
@@ -106,12 +105,18 @@ var DEFAULT_OPTIONS = Object.freeze({
 });
 
 function constructUrlFromParams(src, params) {
-  var optionKeys = Object.keys(params);
-  var fullUrl = optionKeys.reduce(function(uri, key) {
-    return uri.replaceQueryParam(key, params[key]);
-  }, new Uri(src));
-
-  return fullUrl.toString();
+  const [url, query] = src.split("?");
+  const oldParams = query ? query.split("&").map(x => x.split("=")) : [];
+  const allParams = {
+    ...oldParams.reduce(
+      (obj, [key, val]) => Object.assign(obj, { [key]: val }),
+      {}
+    ),
+    ...params
+  };
+  return `${url}?${Object.entries(allParams)
+    .map(([a, b]) => `${a}=${encodeURIComponent(b)}`)
+    .join("&")}`;
 }
 
 /**
