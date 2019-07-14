@@ -116,11 +116,13 @@ var DEFAULT_OPTIONS = Object.freeze({
 });
 
 function constructUrlFromParams(src, params) {
-  return `${src}?${Object.entries(params)
-    .map(function encodeParamValue([a, b]) {
-      return `${a}=${encodeURIComponent(b)}`;
-    })
-    .join("&")}`;
+  const keys = Object.keys(params);
+  let url = src + "?";
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    url += key + "=" + params[key] + "&";
+  }
+  return url.slice(0, -1);
 }
 
 /**
