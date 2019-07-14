@@ -72,17 +72,21 @@ function parseAspectRatio(aspectRatio) {
  */
 function buildSrcSetPairFunction(url, aspectRatioDecimal = 0, fixedHeight) {
   if (fixedHeight) {
-    return targetWidth =>
+    const buildSrcSetPairWithFixedHeight = targetWidth =>
       `${url}&h=${fixedHeight}&w=${targetWidth} ${targetWidth}w`;
+    return buildSrcSetPairWithFixedHeight;
   }
   if (aspectRatioDecimal > 0) {
-    return targetWidth =>
+    const buildSrcSetPairWithAspectRatio = targetWidth =>
       `${url}&h=${Math.ceil(
         targetWidth / aspectRatioDecimal
       )}&w=${targetWidth} ${targetWidth}w`;
+    return buildSrcSetPairWithAspectRatio;
   }
 
-  return targetWidth => `${url}&w=${targetWidth} ${targetWidth}w`;
+  const buildSrcSetPairWithTargetWidth = targetWidth =>
+    `${url}&w=${targetWidth} ${targetWidth}w`;
+  return buildSrcSetPairWithTargetWidth;
 }
 
 /**
@@ -92,13 +96,17 @@ function buildSrcSetPairFunction(url, aspectRatioDecimal = 0, fixedHeight) {
 function buildDprSrcFunction(url, disableQualityByDPR, quality) {
   // Use quality if explicitly passed in -- either as an option or already in the url
   if (disableQualityByDPR && quality) {
-    return dpr => `${url}&q=${quality}&dpr=${dpr} ${dpr}x`;
+    const buildDprSrcWithQuality = dpr =>
+      `${url}&q=${quality}&dpr=${dpr} ${dpr}x`;
+    return buildDprSrcWithQuality;
   }
   if (disableQualityByDPR) {
-    return dpr => `${url}&dpr=${dpr} ${dpr}x`;
+    const buildDprSrcWithoutQuality = dpr => `${url}&dpr=${dpr} ${dpr}x`;
+    return buildDprSrcWithoutQuality;
   }
-  return dpr =>
+  const buildDprSrcWithQualityByDpr = dpr =>
     `${url}&q=${quality || CONSTANTS[`q_dpr${dpr}`]}&dpr=${dpr} ${dpr}x`;
+  return buildDprSrcWithQualityByDpr;
 }
 
 /**

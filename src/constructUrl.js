@@ -107,7 +107,9 @@ var DEFAULT_OPTIONS = Object.freeze({
 
 function constructUrlFromParams(src, params) {
   return `${src}?${Object.entries(params)
-    .map(([a, b]) => `${a}=${encodeURIComponent(b)}`)
+    .map(function encodeParamValue([a, b]) {
+      return `${a}=${encodeURIComponent(b)}`;
+    })
     .join("&")}`;
 }
 
@@ -124,7 +126,7 @@ function constructUrl(src, longOptions) {
   }
 
   var shortOptions = Object.assign({}, DEFAULT_OPTIONS);
-  Object.keys(longOptions).forEach(function(key) {
+  Object.keys(longOptions).forEach(function shortenEncode(key) {
     var val = longOptions[key];
 
     if (PARAM_EXPANSION[key]) {
