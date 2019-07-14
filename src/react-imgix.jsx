@@ -196,15 +196,13 @@ function buildSrc({
 function imgixParams(props) {
   const params = Object.assign({}, defaultImgixParams, props.imgixParams);
 
-  let fit = false;
-  if (params.crop != null) fit = "crop";
-  if (params.fit) fit = params.fit;
-
-  if (params.ar) {
-    delete params.ar;
+  if (params.crop && !params.fit) {
+    params.fit = "crop";
+  } else if (!params.fit) {
+    params.fit = false;
   }
-
-  return Object.assign({}, params, { fit });
+  params.ar = undefined;
+  return params;
 }
 
 /**
