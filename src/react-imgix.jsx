@@ -95,17 +95,17 @@ function buildSrcSetPairFunction(url, aspectRatioDecimal = 0, fixedHeight) {
  */
 function buildDprSrcFunction(url, disableQualityByDPR, quality) {
   // Use quality if explicitly passed in -- either as an option or already in the url
-  if (disableQualityByDPR && quality) {
+  if (quality) {
     const buildDprSrcWithQuality = dpr =>
-      `${url}&q=${quality}&dpr=${dpr} ${dpr}x`;
+      url + "&q=" + quality + "&dpr=" + dpr + " " + dpr + "x";
     return buildDprSrcWithQuality;
   }
   if (disableQualityByDPR) {
-    const buildDprSrcWithoutQuality = dpr => `${url}&dpr=${dpr} ${dpr}x`;
+    const buildDprSrcWithoutQuality = dpr => url + "&dpr=" + dpr + " " + dpr + "x";
     return buildDprSrcWithoutQuality;
   }
   const buildDprSrcWithQualityByDpr = dpr =>
-    `${url}&q=${quality || CONSTANTS[`q_dpr${dpr}`]}&dpr=${dpr} ${dpr}x`;
+    url + "&q=" + CONSTANTS["q_dpr" + dpr] + "&dpr=" + dpr + " " + dpr + "x";
   return buildDprSrcWithQualityByDpr;
 }
 
