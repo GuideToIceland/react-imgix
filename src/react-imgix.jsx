@@ -405,5 +405,7 @@ export {
   Picture,
   Source,
   SourceImpl as __SourceImpl, // for testing
-  PictureImpl as __PictureImpl // for testing
+  PictureImpl as __PictureImpl, // for testing
+  buildSrc,
+  imgixParams
 };
