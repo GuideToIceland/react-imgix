@@ -112,7 +112,7 @@ function buildDprSrcFunction(url, disableQualityByDPR, quality) {
     return buildDprSrcWithoutQuality;
   }
   const buildDprSrcWithQualityByDpr = dpr =>
-    url + "&q=" + CONSTANTS["q_dpr" + dpr] + "&dpr=" + dpr + " " + dpr + "x";
+    url + "&q=" + CONSTANTS[dpr - 1] + "&dpr=" + dpr + " " + dpr + "x";
   return buildDprSrcWithQualityByDpr;
 }
 
