@@ -73,19 +73,23 @@ function parseAspectRatio(aspectRatio) {
 function buildSrcSetPairFunction(url, aspectRatioDecimal = 0, fixedHeight) {
   if (fixedHeight) {
     const buildSrcSetPairWithFixedHeight = targetWidth =>
-      `${url}&h=${fixedHeight}&w=${targetWidth} ${targetWidth}w`;
+      url + "&h=" + fixedHeight + "&w=" + targetWidth + " " + targetWidth + "w";
     return buildSrcSetPairWithFixedHeight;
   }
   if (aspectRatioDecimal > 0) {
     const buildSrcSetPairWithAspectRatio = targetWidth =>
-      `${url}&h=${Math.ceil(
-        targetWidth / aspectRatioDecimal
-      )}&w=${targetWidth} ${targetWidth}w`;
+      url +
+      "&h=" +
+      Math.ceil(targetWidth / aspectRatioDecimal) +
+      "&w=" +
+      targetWidth +
+      " " +
+      targetWidth +
+      "w";
     return buildSrcSetPairWithAspectRatio;
   }
-
   const buildSrcSetPairWithTargetWidth = targetWidth =>
-    `${url}&w=${targetWidth} ${targetWidth}w`;
+    url + "&w=" + targetWidth + " " + targetWidth + "w";
   return buildSrcSetPairWithTargetWidth;
 }
 
