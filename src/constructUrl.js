@@ -101,6 +101,16 @@ var PARAM_EXPANSION = Object.freeze({
   width: "w"
 });
 
+const PARAM_EXPANSION_ENCODED = Object.freeze(
+  Object.keys(PARAM_EXPANSION).reduce(
+    (obj, key) =>
+      Object.assign(obj, {
+        key: encodeURIComponent(PARAM_EXPANSION[key])
+      }),
+    {}
+  )
+);
+
 var DEFAULT_OPTIONS = Object.freeze({
   auto: "format" // http://www.imgix.com/docs/reference/automatic#param-auto
 });
@@ -132,11 +142,11 @@ function constructUrl(src, longOptions) {
     let key = keys[i];
     let val = longOptions[key];
 
-    if (PARAM_EXPANSION[key]) {
-      key = PARAM_EXPANSION[key];
+    if (PARAM_EXPANSION_ENCODED[key]) {
+      key = PARAM_EXPANSION_ENCODED[key];
+    } else {
+      key = encodeURIComponent(key);
     }
-    
-    key = encodeURIComponent(key);
 
     if (key.substr(-2) === "64") {
       val = Base64.encodeURI(val);
