@@ -131,8 +131,9 @@ function buildSrc({
   disableQualityByDPR
 }) {
   const fixedSize = width != null || height != null;
-
-  const [rawSrc, params] = extractQueryParams(inputSrc);
+  const extractedQueryParams = extractQueryParams(inputSrc);
+  const rawSrc = extractedQueryParams[0];
+  const params = extractedQueryParams[1];
 
   const srcOptions = Object.assign(
     {},
