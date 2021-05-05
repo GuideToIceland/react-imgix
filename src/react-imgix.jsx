@@ -376,9 +376,7 @@ class SourceImpl extends Component {
     );
     const childProps = Object.assign({}, this.props.htmlAttributes, {
       [attributeConfig.sizes]: this.props.sizes,
-      className: this.props.className,
-      width: width <= 1 ? null : width,
-      height: height <= 1 ? null : height
+      className: this.props.className
     });
 
     // inside of a <picture> element a <source> element ignores its src
